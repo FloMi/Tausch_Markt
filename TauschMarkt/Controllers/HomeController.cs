@@ -14,7 +14,24 @@ namespace TauschMarkt.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            MySqlConnection connection = new MySqlConnection("server=localhost;database=tauschmarkt;uid=root;password=");
+            connection.Open();
+            MySqlCommand command = connection.CreateCommand();
+            command.CommandText = $"SELECT id, Name, Preis, kategroie_id, status, beschreibung FROM artikel LIMIT 0,6";
+            var reader = command.ExecuteReader();
+            List<Artikel> lohl = new List<Artikel>();
+            while (reader.Read())
+            {
+                Artikel art = new Artikel();
+                art.id = reader["id"].ToString();
+                art.Preis = reader["Preis"].ToString();
+                art.Name = reader["Name"].ToString();
+                lohl.Add(art);
+            }
+            
+
+
+            return View(lohl);
         }
 
         public ActionResult ShopItem(int id)
@@ -47,7 +64,16 @@ namespace TauschMarkt.Controllers
             byte[] picString = new byte[] { };
             if (reader.Read())
             {
-                picString = (byte[])reader["picture"];
+                if (DBNull.Value.Equals(reader["picture"]))
+                {
+                    picString = System.IO.File.ReadAllBytes(Server.MapPath("~/")+"\\Media\\main.png");
+                }
+                else
+                {
+                    picString = (byte[])reader["picture"];
+                }
+                
+               
             }
             connection.Close();
             Response.AppendHeader("Content-Type", "image/jpeg");
