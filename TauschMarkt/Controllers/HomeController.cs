@@ -17,6 +17,8 @@ namespace TauschMarkt.Controllers
             MySqlConnection connection = new MySqlConnection("server=localhost;database=tauschmarkt;uid=root;password=");
             connection.Open();
             MySqlCommand command = connection.CreateCommand();
+
+
             command.CommandText = $"SELECT id, Name, Preis, kategroie_id, status, beschreibung FROM artikel LIMIT 0,6";
             var reader = command.ExecuteReader();
             List<Artikel> lohl = new List<Artikel>();
@@ -26,6 +28,7 @@ namespace TauschMarkt.Controllers
                 art.id = reader["id"].ToString();
                 art.Preis = reader["Preis"].ToString();
                 art.Name = reader["Name"].ToString();
+                art.beschreibung = reader["beschreibung"].ToString();
                 lohl.Add(art);
             }
             
