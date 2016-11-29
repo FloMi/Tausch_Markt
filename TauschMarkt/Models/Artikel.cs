@@ -8,7 +8,7 @@ namespace TauschMarkt.Models
     public class Artikel
     {
 
-        public int id { get; set; }
+        public string id { get; set; }
         public string Name { get; set; }
         public string Preis { get; set; }
         public int kategroie_id { get; set; }
