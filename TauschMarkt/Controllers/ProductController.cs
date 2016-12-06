@@ -21,14 +21,9 @@ namespace TauschMarkt.Controllers
             //ViewBag.Message = "Your contact page.";
             try
             {
-                string myConnectionString = "SERVER=85.10.205.173;" +
-                            "DATABASE=tauschmarkt;" +
-                            "UID=flomiroesser;" +
-                            "PASSWORD=flomiroesser;";
-
-                MySqlConnection connection = new MySqlConnection(myConnectionString);
+                MySqlConnection connection = new MySqlConnection("server=e50073-mysql.services.easyname.eu;uid=u59498db9;password=6lfqhupg;database=u59498db9;");
                 connection.Open();
-                
+
 
                 MySqlCommand command = connection.CreateCommand();
                 command.CommandText = $"SELECT Name, Preis, kategroie_id, status, beschreibung FROM artikel WHERE id = {id}";
@@ -44,12 +39,11 @@ namespace TauschMarkt.Controllers
                 connection.Close();
                 return View(art);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
                 
             }
-
-            return View();
+            throw new Exception("Error while loading shop item.");
            
         }
     }
