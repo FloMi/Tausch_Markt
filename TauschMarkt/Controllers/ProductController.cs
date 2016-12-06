@@ -18,21 +18,39 @@ namespace TauschMarkt.Controllers
 
         public ActionResult ShopItem(int id)
         {
-            ViewBag.Message = "Your contact page.";
-            MySqlConnection connection = new MySqlConnection("server=localhost;database=tauschmarkt;uid=root;password=");
-            connection.Open();
-            MySqlCommand command = connection.CreateCommand();
-            command.CommandText = $"SELECT Name, Preis, kategroie_id, status, beschreibung FROM artikel WHERE id = {id}";
-            var reader = command.ExecuteReader();
-            Artikel art = new Artikel();
-            if (reader.Read())
+            //ViewBag.Message = "Your contact page.";
+            try
             {
-                art.Name = reader["Name"].ToString();
-                art.Preis = reader["Preis"].ToString();
-                art.beschreibung = reader["beschreibung"].ToString();
+                string myConnectionString = "SERVER=85.10.205.173;" +
+                            "DATABASE=tauschmarkt;" +
+                            "UID=flomiroesser;" +
+                            "PASSWORD=flomiroesser;";
 
+                MySqlConnection connection = new MySqlConnection(myConnectionString);
+                connection.Open();
+                
+
+                MySqlCommand command = connection.CreateCommand();
+                command.CommandText = $"SELECT Name, Preis, kategroie_id, status, beschreibung FROM artikel WHERE id = {id}";
+                var reader = command.ExecuteReader();
+                Artikel art = new Artikel();
+                if (reader.Read())
+                {
+                    art.Name = reader["Name"].ToString();
+                    art.Preis = reader["Preis"].ToString();
+                    art.beschreibung = reader["beschreibung"].ToString();
+
+                }
+                connection.Close();
+                return View(art);
             }
-            return View(art);
+            catch (Exception ex)
+            {
+                
+            }
+
+            return View();
+           
         }
     }
 }
