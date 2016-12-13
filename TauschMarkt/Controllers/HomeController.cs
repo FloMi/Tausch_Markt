@@ -14,7 +14,7 @@ namespace TauschMarkt.Controllers
     {
         public ActionResult Index()
         {
-            MySqlConnection connection = new MySqlConnection("server=localhost;database=tauschmarkt;uid=root;password=");
+            MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu;Port=3306;Uid=u59498db9;Pwd=6lfqhupg;Database=u59498db9;");
             connection.Open();
             MySqlCommand command = connection.CreateCommand();
 
