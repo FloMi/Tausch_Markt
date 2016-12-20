@@ -176,3 +176,4 @@ C:\Users\Adrian\Documents\Visual Studio 2015\Projects\Tausch_Markt\TauschMarkt\b
 C:\Users\Adrian\Documents\Visual Studio 2015\Projects\Tausch_Markt\TauschMarkt\obj\Debug\TauschMarkt.csprojResolveAssemblyReference.cache
 C:\Users\Adrian\Documents\Visual Studio 2015\Projects\Tausch_Markt\TauschMarkt\obj\Debug\TauschMarkt.dll
 C:\Users\Adrian\Documents\Visual Studio 2015\Projects\Tausch_Markt\TauschMarkt\obj\Debug\TauschMarkt.pdb
+C:\Users\FlorianM\documents\visual studio 2015\Projects\TauschMarkt\TauschMarkt\bin\MySql.Data.xml
