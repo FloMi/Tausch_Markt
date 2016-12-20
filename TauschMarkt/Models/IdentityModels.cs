@@ -29,5 +29,7 @@ namespace TauschMarkt.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<TauschMarkt.Models.Artikel> Artikels { get; set; }
     }
 }
