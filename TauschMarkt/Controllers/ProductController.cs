@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -21,7 +22,7 @@ namespace TauschMarkt.Controllers
             //ViewBag.Message = "Your contact page.";
             try
             {
-                MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu;Port=3306;Uid=u59498db9;Pwd=6lfqhupg;Database=u59498db9;");
+                MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu; Port=3306; Database=u59498db9; Uid=u59498db9; Pwd=6lfqhupg;");
                 connection.Open();
 
 
@@ -41,10 +42,63 @@ namespace TauschMarkt.Controllers
             }
             catch (Exception e)
             {
-                
+
             }
             throw new Exception("Error while loading shop item.");
-           
+
         }
+
+
+
+
+        public ActionResult AddItem()
+        {
+            return View();
+        }
+
+        public string AddItemAjax(string name, string preis, string beschreibung)
+        {
+            try
+            {
+                MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu;Port=3306;Uid=u59498db9;Pwd=6lfqhupg;Database=u59498db9;");
+                connection.Open();
+
+                byte[] fileData = null;
+
+                foreach (string file in Request.Files)
+                {
+                    var fileContent = Request.Files[file];
+                    if (fileContent != null && fileContent.ContentLength > 0)
+                    {
+                        using (var binaryReader = new BinaryReader(Request.Files[0].InputStream))
+                            fileData = binaryReader.ReadBytes(Request.Files[0].ContentLength);
+                    }
+                }
+
+                string query = "INSERT INTO artikel(Name, Preis, kategorie_id, status, picture, beschreibung) VALUES (@Name, @Preis, @KategorieId, @Status, @Picture, @Beschreibung)";
+                using (MySqlCommand cmd = new MySqlCommand(query))
+                {
+                    cmd.Connection = connection;
+                    cmd.Parameters.AddWithValue("@Name", name);
+                    cmd.Parameters.AddWithValue("@Preis", preis);
+                    cmd.Parameters.AddWithValue("@KategorieId", 1);
+                    cmd.Parameters.AddWithValue("@Status", 1);
+                    cmd.Parameters.AddWithValue("@Picture", fileData);
+                    cmd.Parameters.AddWithValue("@Beschreibung", beschreibung);
+                    connection.Open();
+                    cmd.ExecuteNonQuery();
+                    connection.Close();
+                }
+                return "ok";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return "failed";
+
+        }
+
+
     }
 }

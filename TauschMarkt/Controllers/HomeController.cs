@@ -31,7 +31,7 @@ namespace TauschMarkt.Controllers
                 art.beschreibung = reader["beschreibung"].ToString();
                 lohl.Add(art);
             }
-            
+
 
 
             return View(lohl);
@@ -40,31 +40,44 @@ namespace TauschMarkt.Controllers
 
         public ActionResult ProductPicture(int id)
         {
-            MySqlConnection connection = new MySqlConnection("server=localhost;database=tauschmarkt;uid=root;password=");
-            connection.Open();
-            MySqlCommand command = connection.CreateCommand();
-            command.CommandText = $"SELECT picture FROM artikel WHERE id = {id}";
-
-            var reader = command.ExecuteReader();
-            byte[] picString = new byte[] { };
-            if (reader.Read())
+            using (MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu; Port=3306; Database=u59498db9; Uid=u59498db9; Pwd=6lfqhupg;"))
             {
-                if (DBNull.Value.Equals(reader["picture"]))
+                try
                 {
-                    picString = System.IO.File.ReadAllBytes(Server.MapPath("~/")+"\\Media\\main.png");
+                    connection.Open();
                 }
-                else
+                catch (Exception e)
                 {
-                    picString = (byte[])reader["picture"];
+                    Console.WriteLine(e.Message);
+                    return null;
                 }
-                
-               
+                MySqlCommand command = connection.CreateCommand();
+                command.CommandText = $"SELECT picture FROM artikel WHERE id = {id}";
+
+                var reader = command.ExecuteReader();
+                byte[] picString = new byte[] { };
+                if (reader.Read())
+                {
+                    if (DBNull.Value.Equals(reader["picture"]))
+                    {
+                        picString = System.IO.File.ReadAllBytes(Server.MapPath("~/") + "\\Media\\main.png");
+                    }
+                    else
+                    {
+                        picString = (byte[])reader["picture"];
+                    }
+
+
+                }
+                reader.Close();
+                connection.Close();
+                Response.AppendHeader("Content-Type", "image/jpeg");
+
+                return File(picString, "image/jpeg");
+
             }
-            connection.Close();
-            Response.AppendHeader("Content-Type", "image/jpeg");
 
 
-            return File(picString, "image/jpeg");
         }
 
         public Image Base64ToImage(byte[] imageBytes)

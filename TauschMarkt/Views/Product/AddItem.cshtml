@@ -1,0 +1,21 @@
+﻿@model TauschMarkt.Models.Artikel
+
+@{
+    ViewBag.Title = "AddItem";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Ein Produkt hinzufügen</h2>
+
+<form id="add-form">
+    Name <input id="Name" name="name" type="Text" /><br>
+    Preis: <input id="Preis" name="preis" type="text" />                                 <br>
+    Beschreibung: <input id="beschreibung" name="beschreibung" type="text" />            <br>
+    Bild: <input type="file" name="file" id="pic" />                                     <br>
+    <input id="senden" value="Save" type="button" />
+    <div id="seas"></div>
+</form>
+
+@section Scripts {
+    <script src="~/Scripts/ajax.js"></script>
+}
