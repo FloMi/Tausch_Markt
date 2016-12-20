@@ -31,7 +31,7 @@ namespace TauschMarkt.Controllers
                 art.beschreibung = reader["beschreibung"].ToString();
                 lohl.Add(art);
             }
-            
+
 
 
             return View(lohl);
