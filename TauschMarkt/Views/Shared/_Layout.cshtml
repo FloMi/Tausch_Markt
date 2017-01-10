@@ -36,7 +36,7 @@
                 <a class="navbar-brand page-scroll" href="#page-top">Tauschmarkt</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <div class="collapse navbar-collapse navbar-ex1-collapse"">
                 <ul class="nav navbar-nav">
                     <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
                     <li class="hidden">
@@ -54,28 +54,28 @@
                     <li>
                         <a class="page-scroll" href="/Product/AddItem">Anzeige Erstellen</a>
                     </li>
-
-                    @if (ViewBag.isLogedIn == null || ViewBag.isLogedIn)
+                </ul>
+                <div style="position:absolute;right:0px;vertical-align:middle;">
+                    @if (ViewBag.isLogedIn != null)
                     {
-                        <li>
-                                <a class="btn btn-danger btn-sm" href="/Account/LogOut"><span class="glyphicon glyphicon-log-out"></span>Log out</a>
-                        </li>
+                        if (ViewBag.isLogedIn)
+                        {
+
+                            <a class="btn btn-danger btn-sm" style="height:40px" href="/Account/LogOut"><span class="glyphicon glyphicon-log-out"></span>Log out</a>
+
+                        }
                     }
                     else
                     {
-                        <li>
-                            <a class="btn btn-success btn-sm" href="/Account/Login"><span class="glyphicon glyphicon-log-out"></span>Log in</a>
-                        </li>
-                        <li>
-                            <a class="btn btn-default btn-sm" href="/Account/Register"><span class="glyphicon glyphicon-log-out"></span>Registrieren</a>
-                        </li>
+
+                        <a class="btn btn-success btn-sm" style="min-height:50px; text-align:center; padding-top:15px;" href="/Account/Login"><span class="glyphicon glyphicon-log-out"></span>Log in</a>
+                        <a class="btn btn-default btn-sm" style="margin-left:5px; min-height:50px; text-align:center; padding-top:15px;" href="/Account/Register"><span class="glyphicon glyphicon-log-out"></span>Registrieren</a>
 
                     }
-                    
-                  
-
-                </ul>
+                </div>
             </div>
+            
+
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
