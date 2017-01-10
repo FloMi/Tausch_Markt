@@ -27,7 +27,7 @@ namespace TauschMarkt.Controllers
 
 
                 MySqlCommand command = connection.CreateCommand();
-                command.CommandText = $"SELECT Name, Preis, kategroie_id, status, beschreibung FROM artikel WHERE id = {id}";
+                command.CommandText = $"SELECT Name, Preis, kategorie_id, status, beschreibung FROM artikel WHERE id = {id}";
                 var reader = command.ExecuteReader();
                 Artikel art = new Artikel();
                 if (reader.Read())
@@ -58,10 +58,11 @@ namespace TauschMarkt.Controllers
 
         public string AddItemAjax(string name, string preis, string beschreibung)
         {
+            
             try
             {
                 MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu;Port=3306;Uid=u59498db9;Pwd=6lfqhupg;Database=u59498db9;");
-                connection.Open();
+                
 
                 byte[] fileData = null;
 
