@@ -185,6 +185,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\form.css" />
     <Content Include="Media\main.png" />
     <Content Include="Content\scrolling-nav.css" />
     <Content Include="Content\shop-homepage.css" />
@@ -211,7 +212,9 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\scrolling-nav.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

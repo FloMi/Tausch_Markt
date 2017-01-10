@@ -76,7 +76,7 @@ namespace TauschMarkt.Controllers
                     }
                 }
 
-                string query = "INSERT INTO artikel(Name, Preis, kategorie_id, status, picture, beschreibung) VALUES (@Name, @Preis, @KategorieId, @Status, @Picture, @Beschreibung)";
+                string query = "INSERT INTO artikel(Name, Preis, kategorie_id, status, picture, beschreibung, user_id) VALUES (@Name, @Preis, @KategorieId, @Status, @Picture, @Beschreibung, @Userid)";
                 using (MySqlCommand cmd = new MySqlCommand(query))
                 {
                     cmd.Connection = connection;
@@ -86,6 +86,7 @@ namespace TauschMarkt.Controllers
                     cmd.Parameters.AddWithValue("@Status", 1);
                     cmd.Parameters.AddWithValue("@Picture", fileData);
                     cmd.Parameters.AddWithValue("@Beschreibung", beschreibung);
+                    cmd.Parameters.AddWithValue("@Userid", User.Identity.Name.ToString());
                     connection.Open();
                     cmd.ExecuteNonQuery();
                     connection.Close();
