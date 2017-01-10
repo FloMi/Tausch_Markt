@@ -1,4 +1,11 @@
 ﻿$(document).ready(function () {
+    
+
+    $('#senden').on('click', insertItem);
+
+});
+
+function insertItem() {
     var $name;
     var $preis;
     var $beschreibung;
@@ -9,24 +16,22 @@
     $beschreibung = $('#beschreibung');
     $pic = $('#pic');
 
-    $('#senden').on('click', insertItem);
-
-});
-
-function insertItem() {
     alert("Wird hochgeladen ...");
-    var formData = new FormData($('#add-form'));
-    alert(JSON.stringify(formData));
-    if (formData["file"].length > 0) {
-        if (window.FormData !== undefined) {
-            var data = new FormData();
-            for (var x = 0; x < pic.length; x++) {
-                data.append("file" + x, pic[x]);
-            }
-            $.post({
-                url: 'Product/AddItemAjax',
+    var formData = new FormData();
+    formData.append('name', $name.val());
+    formData.append('preis', $preis.val());
+    formData.append('beschreibung', $beschreibung.val())
+    formData.append('file', $pic[0].files[0]);
+    alert(formData.get('name'));
+    if ($pic.val() !== '' ) {
+        if (window.FormData !== undefined) {            
+            console.log(formData);
+            $.ajax({
+                type: 'POST',
+                url: 'AddItemAjax',
                 data: formData,
-                beforeSend: function (data) { $('#seas').html("Bitte warten ..."); },
+                contentType: false,
+                processData: false,
                 success: function (data) {
                     $('#seas').html(data);
                 }

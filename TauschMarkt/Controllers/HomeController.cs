@@ -22,7 +22,7 @@ namespace TauschMarkt.Controllers
                     MySqlCommand command = connection.CreateCommand();
 
 
-                    command.CommandText = $"SELECT id, Name, Preis, kategroie_id, status, beschreibung FROM artikel LIMIT 0,6";
+                    command.CommandText = $"SELECT id, Name, Preis, kategorie_id, status, beschreibung FROM artikel LIMIT 0,6";
                     var reader = command.ExecuteReader();
                     List<Artikel> lohl = new List<Artikel>();
                     while (reader.Read())
