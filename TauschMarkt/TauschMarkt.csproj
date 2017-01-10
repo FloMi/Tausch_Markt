@@ -250,6 +250,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Product\ShopItem.cshtml" />
     <Content Include="Views\Product\AddItem.cshtml" />
+    <Content Include="Views\Home\MeinTauschmarkt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
