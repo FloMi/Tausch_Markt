@@ -17,6 +17,27 @@ namespace TauschMarkt.Controllers
             return View();
         }
 
+        public ActionResult DeleteItem(int id)
+        {
+            try
+            {
+                MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu;Port=3306;Uid=u59498db9;Pwd=6lfqhupg;Database=u59498db9;");
+                connection.Open();
+                MySqlCommand command = connection.CreateCommand();
+                command.CommandText = $"DELETE FROM artikel WHERE id = {id}";
+                command.ExecuteNonQuery();
+
+                connection.Close();
+                Response.Redirect("/Home/MeinTauschmarkt");
+            }
+            catch(Exception e)
+            {
+
+            }
+
+            return null;
+        }
+
         public ActionResult ShopItem(int id)
         {
             //ViewBag.Message = "Your contact page.";
