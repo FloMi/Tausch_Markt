@@ -13,6 +13,7 @@ namespace TauschMarkt.Controllers
     public class HomeController : Controller
     {
         String currentUser;
+        Boolean logedIn = false;
 
         public ActionResult Index()
         {
@@ -55,6 +56,13 @@ namespace TauschMarkt.Controllers
 
             ViewBag.logedInUser = currentUser;
 
+            if (logedIn != null)
+            {
+
+            }
+
+            ViewBag.isLogedIn = logedIn;
+
             using (MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu;Port=3306;Uid=u59498db9;Pwd=6lfqhupg;Database=u59498db9;"))
             {
                 try
@@ -75,8 +83,6 @@ namespace TauschMarkt.Controllers
                         art.beschreibung = reader["beschreibung"].ToString();
                         artikel.Add(art);
                     }
-
-
 
                     return View(artikel);
                 }

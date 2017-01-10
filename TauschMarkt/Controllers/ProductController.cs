@@ -22,7 +22,7 @@ namespace TauschMarkt.Controllers
             //ViewBag.Message = "Your contact page.";
             try
             {
-                MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu; Port=3306; Database=u59498db9; Uid=u59498db9; Pwd=6lfqhupg;");
+                MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu;Port=3306;Uid=u59498db9;Pwd=6lfqhupg;Database=u59498db9;");
                 connection.Open();
 
 
