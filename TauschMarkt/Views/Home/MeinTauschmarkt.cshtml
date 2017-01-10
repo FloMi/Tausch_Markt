@@ -17,17 +17,13 @@
                     </h4>
                     <p>@item.beschreibung</p>
                 </div>
-                <div class="ratings">
-                    <p class="pull-right">15 Verkäuferbewertung</p>
-                    <p>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                    </p>
-                </div>
+                <a href="/Product/DeleteItem/?id=@item.id" class="btn btn-success btn-sm">Produkt bearbeiten</a>
+                <a href="/Product/DeleteItem/?id=@item.id" class="btn btn-danger btn-sm">Produkt löschen</a>
+               
+
+                
             </div>
+            
         </div>
     }
 </div>
