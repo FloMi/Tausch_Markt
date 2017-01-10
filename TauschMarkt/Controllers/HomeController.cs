@@ -12,6 +12,8 @@ namespace TauschMarkt.Controllers
 {
     public class HomeController : Controller
     {
+        String currentUser;
+
         public ActionResult Index()
         {
             using (MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu;Port=3306;Uid=u59498db9;Pwd=6lfqhupg;Database=u59498db9;"))
@@ -43,10 +45,51 @@ namespace TauschMarkt.Controllers
                 {
                     Console.WriteLine(e.Message);
                     return null;
-                }
-
-                
+                }              
             }
+        }
+
+        public ActionResult MeinTauschmarkt()
+        {
+            currentUser = User.Identity.Name.ToString();
+
+            ViewBag.logedInUser = currentUser;
+
+            using (MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu;Port=3306;Uid=u59498db9;Pwd=6lfqhupg;Database=u59498db9;"))
+            {
+                try
+                {
+                    connection.Open();
+                    MySqlCommand command = connection.CreateCommand();
+
+
+                    command.CommandText = $"SELECT id, Name, Preis, kategorie_id, status, beschreibung FROM artikel WHERE user_id='" +currentUser+"'";
+                    var reader = command.ExecuteReader();
+                    List<Artikel> artikel = new List<Artikel>();
+                    while (reader.Read())
+                    {
+                        Artikel art = new Artikel();
+                        art.id = reader["id"].ToString();
+                        art.Preis = reader["Preis"].ToString();
+                        art.Name = reader["Name"].ToString();
+                        art.beschreibung = reader["beschreibung"].ToString();
+                        artikel.Add(art);
+                    }
+
+
+
+                    return View(artikel);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return null;
+                }
+            }
+
+
+
+            return View();
         }
 
 

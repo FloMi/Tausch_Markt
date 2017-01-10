@@ -10,19 +10,18 @@ function insertItem() {
     var $preis;
     var $beschreibung;
     var $pic;
+    var $prozent = $('#seas');
 
     $name = $('#Name');
     $preis = $('#Preis');
     $beschreibung = $('#beschreibung');
     $pic = $('#pic');
 
-    alert("Wird hochgeladen ...");
     var formData = new FormData();
     formData.append('name', $name.val());
     formData.append('preis', $preis.val());
     formData.append('beschreibung', $beschreibung.val())
     formData.append('file', $pic[0].files[0]);
-    alert(formData.get('name'));
     if ($pic.val() !== '' ) {
         if (window.FormData !== undefined) {            
             console.log(formData);
@@ -33,7 +32,11 @@ function insertItem() {
                 contentType: false,
                 processData: false,
                 success: function (data) {
-                    $('#seas').html(data);
+                    if (data == 'ok') {
+                        $('#senden').attr('disabled', 'disabled')
+                        $('#seas').html('Das Produkt wurde erfolgreich hinzugefügt!');
+                    }
+                   
                 }
             });
         } else alert("form data undefined");
