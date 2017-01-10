@@ -1,0 +1,33 @@
+﻿@model List<TauschMarkt.Models.Artikel>
+
+<h2>MeinTauschmarkt</h2>
+
+<h3>@ViewBag.logedInUser</h3>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-sm-4 col-lg-4 col-md-4">
+            <div class="thumbnail">
+                <img src="/Home/ProductPicture/?id=@item.id" alt="">
+                <div class="caption">
+                    <h4 class="pull-right">€@item.Preis</h4>
+                    <h4>
+                        <a href="/Product/ShopItem/?id=@item.id">@item.Name</a>
+                    </h4>
+                    <p>@item.beschreibung</p>
+                </div>
+                <div class="ratings">
+                    <p class="pull-right">15 Verkäuferbewertung</p>
+                    <p>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

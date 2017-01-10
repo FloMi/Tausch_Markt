@@ -4,3 +4,5 @@
 
 *.suo
 /.vs/config/applicationhost.config
+/TauschMarkt/App_Data/aspnet-TauschMarkt-20161122025008.mdf
+/TauschMarkt/App_Data/aspnet-TauschMarkt-20161122025008_log.ldf
