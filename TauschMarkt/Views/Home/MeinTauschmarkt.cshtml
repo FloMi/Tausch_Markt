@@ -18,7 +18,7 @@
                     <p>@item.beschreibung</p>
                 </div>
                 <a href="/Product/DeleteItem/?id=@item.id" class="btn btn-success btn-sm">Produkt bearbeiten</a>
-                <a href="/Product/DeleteItem/?id=@item.id" class="btn btn-danger btn-sm">Produkt löschen</a>
+                <a href="/Product/DeleteItem/?id=@item.id" class="btn btn-danger btn-sm" onclick="return confirm('Möchtest du das Produkt wirklich löschen? \n\nFür Ja (Löschen) = OK Klicken \nFür Nein (nicht löschen) = Abbrechen klicken\n\n')">Produkt löschen</a>
                
 
                 
