@@ -1,6 +1,6 @@
 ﻿@model List<TauschMarkt.Models.Artikel>
-
-<h2>MeinTauschmarkt</h2>
+<script src="~/Scripts/peter.js"></script>
+<h2>Mein Tauschmarkt</h2>
 
 <h3>@ViewBag.logedInUser</h3>
 
@@ -9,7 +9,7 @@
     {
         <div class="col-sm-4 col-lg-4 col-md-4">
             <div class="thumbnail">
-                <img src="/Home/ProductPicture/?id=@item.id" alt="">
+                <img id="productpic" src="/Home/ProductPicture/?id=@item.id" alt="" onerror="loadPicError()">
                 <div class="caption">
                     <h4 class="pull-right">€@item.Preis</h4>
                     <h4>
@@ -17,7 +17,7 @@
                     </h4>
                     <p>@item.beschreibung</p>
                 </div>
-                <a href="/Product/DeleteItem/?id=@item.id" class="btn btn-success btn-sm">Produkt bearbeiten</a>
+                <a href="/Product/EditItem/?id=@item.id" class="btn btn-success btn-sm">Produkt bearbeiten</a>
                 <a href="/Product/DeleteItem/?id=@item.id" class="btn btn-danger btn-sm" onclick="return confirm('Möchtest du das Produkt wirklich löschen? \n\nFür Ja (Löschen) = OK Klicken \nFür Nein (nicht löschen) = Abbrechen klicken\n\n')">Produkt löschen</a>
                
 

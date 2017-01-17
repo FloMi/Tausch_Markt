@@ -194,6 +194,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Media\no_img.png" />
     <Content Include="Scripts\ajax.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -251,6 +252,8 @@
     <Content Include="Views\Product\ShopItem.cshtml" />
     <Content Include="Views\Product\AddItem.cshtml" />
     <Content Include="Views\Home\MeinTauschmarkt.cshtml" />
+    <Content Include="Views\Product\EditItem.cshtml" />
+    <Content Include="Views\Product\UpdateArtikel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -15,8 +15,42 @@ namespace TauschMarkt.Controllers
         String currentUser;
         Boolean logedIn = false;
 
+        public void setProducts()
+        {
+            using (MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu;Port=3306;Uid=u59498db9;Pwd=6lfqhupg;Database=u59498db9;"))
+            {
+                try
+                {
+                    connection.Open();
+                    MySqlCommand command = connection.CreateCommand();
+
+
+                    command.CommandText = $"SELECT id FROM artikel";
+                    var reader = command.ExecuteReader();
+                    List<Artikel> lohl = new List<Artikel>();
+                    while (reader.Read())
+                    {
+                        Artikel art = new Artikel();
+                        art.id = reader["id"].ToString();
+
+                        lohl.Add(art);
+                    }
+
+                    /* TODO: FLOMI MOCH DES */
+                    
+                   
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                 
+                }
+            }
+        }
+
         public ActionResult Index()
         {
+            setProducts();
             using (MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu;Port=3306;Uid=u59498db9;Pwd=6lfqhupg;Database=u59498db9;"))
             {
                 try
