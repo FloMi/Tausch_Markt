@@ -67,10 +67,12 @@ namespace TauschMarkt.Controllers
                     }
                     Random rnd = new Random();
 
+                    int s = rnd.Next(3, seas.Count()-3);
+        
 
-                    ViewBag.bild1 = seas[rnd.Next(1, seas.Count())];
-                    ViewBag.bild2 = seas[rnd.Next(1, seas.Count())];
-                    ViewBag.bild3 = seas[rnd.Next(1, seas.Count())];
+                    ViewBag.bild1 = seas[s];
+                    ViewBag.bild2 = seas[s+1];
+                    ViewBag.bild3 = seas[s+2];
 
                     return View(lohl);
                 }
