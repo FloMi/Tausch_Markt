@@ -17,6 +17,9 @@ namespace TauschMarkt.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+
+
+        public static bool logedIn = false;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -59,7 +62,10 @@ namespace TauschMarkt.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+
+            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
             ViewBag.ReturnUrl = returnUrl;
+            logedIn = HttpContext.User.Identity.IsAuthenticated;
             return View();
         }
 
@@ -141,6 +147,7 @@ namespace TauschMarkt.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
             return View();
         }
 
@@ -192,6 +199,7 @@ namespace TauschMarkt.Controllers
         [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
+            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
             return View();
         }
 
@@ -228,6 +236,7 @@ namespace TauschMarkt.Controllers
         [AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
         {
+            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
             return View();
         }
 
@@ -246,6 +255,8 @@ namespace TauschMarkt.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
         {
+            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -270,6 +281,7 @@ namespace TauschMarkt.Controllers
         [AllowAnonymous]
         public ActionResult ResetPasswordConfirmation()
         {
+            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
             return View();
         }
 
@@ -308,12 +320,14 @@ namespace TauschMarkt.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.isLogedIn = AccountController.checkIfLoggedin();
                 return View();
             }
 
             // Token generieren und senden
             if (!await SignInManager.SendTwoFactorCodeAsync(model.SelectedProvider))
             {
+                ViewBag.isLogedIn = AccountController.checkIfLoggedin();
                 return View("Error");
             }
             return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
@@ -358,7 +372,6 @@ namespace TauschMarkt.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                HomeController.logedIn = User.Identity.IsAuthenticated;
                 return RedirectToAction("Index", "Manage");
             }
 
@@ -405,9 +418,7 @@ namespace TauschMarkt.Controllers
 
             HttpContext.User = new GenericPrincipal(new GenericIdentity(string.Empty), null);
 
-            bool logedIn = HttpContext.User.Identity.IsAuthenticated;
-
-            HomeController.logedIn = logedIn;
+            logedIn = HttpContext.User.Identity.IsAuthenticated;
 
             return RedirectToAction("Index", "Home");
         }
@@ -427,6 +438,7 @@ namespace TauschMarkt.Controllers
         [AllowAnonymous]
         public ActionResult ExternalLoginFailure()
         {
+            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
             return View();
         }
 
@@ -508,5 +520,11 @@ namespace TauschMarkt.Controllers
             }
         }
         #endregion
+
+         static public bool checkIfLoggedin()
+        {
+               return logedIn;
+        }      
+
     }
 }
