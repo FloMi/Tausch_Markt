@@ -358,6 +358,7 @@ namespace TauschMarkt.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
+                HomeController.logedIn = User.Identity.IsAuthenticated;
                 return RedirectToAction("Index", "Manage");
             }
 
@@ -388,17 +389,27 @@ namespace TauschMarkt.Controllers
         }
 
         public ActionResult LogOut()
-
         {
-            Session.Abandon();
-            FormsAuthentication.SignOut();
-            HomeController.currentUser = "";
+            TempData.Clear();
 
-            HttpContext.User = new GenericPrincipal(new GenericIdentity(string.Empty), null);         
-            
-            HomeController.logedIn = false;
-            Response.Redirect("/Home/Index");
-            return View();
+            FormsAuthentication.SignOut();
+            Session.Abandon();
+
+            HttpCookie cookie1 = new HttpCookie(FormsAuthentication.FormsCookieName, "");
+            cookie1.Expires = DateTime.Now.AddYears(-1);
+            Response.Cookies.Add(cookie1);
+
+            HttpCookie cookie2 = new HttpCookie("ASP.NET_SessionId", "");
+            cookie2.Expires = DateTime.Now.AddYears(-1);
+            Response.Cookies.Add(cookie2);
+
+            HttpContext.User = new GenericPrincipal(new GenericIdentity(string.Empty), null);
+
+            bool logedIn = HttpContext.User.Identity.IsAuthenticated;
+
+            HomeController.logedIn = logedIn;
+
+            return RedirectToAction("Index", "Home");
         }
 
         //
