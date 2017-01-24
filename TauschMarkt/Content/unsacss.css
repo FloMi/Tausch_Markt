@@ -1,0 +1,10 @@
+﻿.slidimg
+{
+    overflow:hidden;
+    fit:fill;
+    max-height:300px;
+    min-height:300px;
+    display:block;
+    margin-left:auto;
+    margin-right:auto
+}
