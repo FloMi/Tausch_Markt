@@ -36,7 +36,7 @@
                 <a class="navbar-brand page-scroll" href="#page-top">Tauschmarkt</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse navbar-ex1-collapse"">
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav">
                     <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
                     <li class="hidden">
@@ -44,12 +44,6 @@
                     </li>
                     <li>
                         <a class="page-scroll" href="/Home/MeinTauschmarkt">Mein Tauschmarkt</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#services">Login</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#contact">Regiestrieren</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="/Product/AddItem">Anzeige Erstellen</a>
@@ -61,15 +55,22 @@
                         if (ViewBag.isLogedIn)
                         {
 
-                            <a class="btn btn-danger btn-sm" style="height:40px" href="/Account/LogOut"><span class="glyphicon glyphicon-log-out"></span>Log out</a>
+                            <a class="btn btn-danger btn-sm" style="min-height:50px; text-align:center; padding-top:15px;" href="/Account/LogOut"><span class="glyphicon glyphicon-log-out"></span>Log out</a>
+
+                        }
+                        else
+                        {
+
+                            <a class="btn btn-success btn-sm" style="min-height:50px; text-align:center; padding-top:15px;" href="/Account/Login"><span class="glyphicon glyphicon-log-out"></span>Log in</a>
+                            <a class="btn btn-default btn-sm" style="margin-left:5px; min-height:50px; text-align:center; padding-top:15px;" href="/Account/Register"><span class="glyphicon glyphicon-log-out"></span>Registrieren</a>
 
                         }
                     }
                     else
                     {
 
-                        <a class="btn btn-success btn-sm" style="min-height:50px; text-align:center; padding-top:15px;" href="/Account/Login"><span class="glyphicon glyphicon-log-out"></span>Log in</a>
-                        <a class="btn btn-default btn-sm" style="margin-left:5px; min-height:50px; text-align:center; padding-top:15px;" href="/Account/Register"><span class="glyphicon glyphicon-log-out"></span>Registrieren</a>
+                            <a class="btn btn-success btn-sm" style="min-height:50px; text-align:center; padding-top:15px;" href="/Account/Login"><span class="glyphicon glyphicon-log-out"></span>Log in</a>
+                            <a class="btn btn-default btn-sm" style="margin-left:5px; min-height:50px; text-align:center; padding-top:15px;" href="/Account/Register"><span class="glyphicon glyphicon-log-out"></span>Registrieren</a>
 
                     }
                 </div>

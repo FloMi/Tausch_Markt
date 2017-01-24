@@ -48,11 +48,12 @@ namespace TauschMarkt.Controllers
 
 
                 MySqlCommand command = connection.CreateCommand();
-                command.CommandText = $"SELECT Name, Preis, kategorie_id, status, beschreibung FROM artikel WHERE id = {id}";
+                command.CommandText = $"SELECT id, Name, Preis, kategorie_id, status, beschreibung FROM artikel WHERE id = {id}";
                 var reader = command.ExecuteReader();
                 Artikel art = new Artikel();
                 if (reader.Read())
                 {
+                    art.id = reader["id"].ToString();
                     art.Name = reader["Name"].ToString();
                     art.Preis = reader["Preis"].ToString();
                     art.beschreibung = reader["beschreibung"].ToString();
@@ -69,7 +70,42 @@ namespace TauschMarkt.Controllers
 
         }
 
+        public ActionResult ProductPicture(int id)
+        {
+            using (MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu; Port=3306; Database=u59498db9; Uid=u59498db9; Pwd=6lfqhupg;"))
+            {
+                try
+                {
+                    connection.Open();
+                    MySqlCommand command = connection.CreateCommand();
+                    command.CommandText = $"SELECT picture FROM artikel WHERE id = {id}";
 
+                    var reader = command.ExecuteReader();
+                    byte[] picString = new byte[] { };
+                    if (reader.Read())
+                    {
+                        if (DBNull.Value.Equals(reader["picture"]))
+                        {
+                            picString = System.IO.File.ReadAllBytes(Server.MapPath("~/") + "\\Media\\main.png");
+                        }
+                        else
+                        {
+                            picString = (byte[])reader["picture"];
+                        }
+                    }
+                    reader.Close();
+                    connection.Close();
+                    Response.AppendHeader("Content-Type", "image/jpeg");
+
+                    return File(picString, "image/jpeg");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return null;
+                }
+            }
+        }
 
 
         public ActionResult AddItem()

@@ -12,11 +12,24 @@ namespace TauschMarkt.Controllers
 {
     public class HomeController : Controller
     {
-        String currentUser;
-        Boolean logedIn = false;
+        public static String currentUser;
+        public static Boolean logedIn = false;
 
         public ActionResult Index()
         {
+
+
+            currentUser = User.Identity.Name.ToString();
+           
+            ViewBag.logedInUser = currentUser;
+
+            if (HttpContext.User.Identity.IsAuthenticated && (System.Web.HttpContext.Current.User != null))
+            {
+                logedIn = HttpContext.User.Identity.IsAuthenticated;
+                ViewBag.isLogedIn = logedIn;
+            }
+
+
             using (MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu;Port=3306;Uid=u59498db9;Pwd=6lfqhupg;Database=u59498db9;"))
             {
                 try
@@ -25,7 +38,7 @@ namespace TauschMarkt.Controllers
                     MySqlCommand command = connection.CreateCommand();
 
 
-                    command.CommandText = $"SELECT id, Name, Preis, kategorie_id, status, beschreibung FROM artikel LIMIT 0,6";
+                    command.CommandText = $"SELECT id, Name, Preis, kategorie_id, status, beschreibung FROM artikel";
                     var reader = command.ExecuteReader();
                     List<Artikel> lohl = new List<Artikel>();
                     while (reader.Read())
@@ -52,17 +65,9 @@ namespace TauschMarkt.Controllers
 
         public ActionResult MeinTauschmarkt()
         {
-            currentUser = User.Identity.Name.ToString();
+            
 
-            ViewBag.logedInUser = currentUser;
-
-            if (logedIn != null)
-            {
-
-            }
-
-            ViewBag.isLogedIn = logedIn;
-
+           
             using (MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu;Port=3306;Uid=u59498db9;Pwd=6lfqhupg;Database=u59498db9;"))
             {
                 try
@@ -164,6 +169,13 @@ namespace TauschMarkt.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        internal static void logout()
+        {
+        
+
+            throw new NotImplementedException();
         }
     }
 }

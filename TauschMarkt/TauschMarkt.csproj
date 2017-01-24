@@ -251,6 +251,7 @@
     <Content Include="Views\Product\ShopItem.cshtml" />
     <Content Include="Views\Product\AddItem.cshtml" />
     <Content Include="Views\Home\MeinTauschmarkt.cshtml" />
+    <Content Include="Views\Home\DeleteItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

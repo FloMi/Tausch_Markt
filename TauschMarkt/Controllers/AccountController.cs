@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using TauschMarkt.Models;
+using System.Web.Security;
+using System.Security.Principal;
 
 namespace TauschMarkt.Controllers
 {
@@ -383,6 +385,20 @@ namespace TauschMarkt.Controllers
 
             ViewBag.ReturnUrl = returnUrl;
             return View(model);
+        }
+
+        public ActionResult LogOut()
+
+        {
+            Session.Abandon();
+            FormsAuthentication.SignOut();
+            HomeController.currentUser = "";
+
+            HttpContext.User = new GenericPrincipal(new GenericIdentity(string.Empty), null);         
+            
+            HomeController.logedIn = false;
+            Response.Redirect("/Home/Index");
+            return View();
         }
 
         //
