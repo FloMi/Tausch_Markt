@@ -23,13 +23,13 @@
 
                             
                                 <div class="item active">
-                                    <img class="slide-image slidimg" src="/Home/ProductPicture/?id=1">
+                                    <img class="slide-image slidimg" src="/Home/ProductPicture/?id=@ViewBag.bild1">
                                 </div>
                             <div class="item">
-                                <img class="slide-image slidimg" src="/Home/ProductPicture/?id=26" alt="">
+                                <img class="slide-image slidimg" src="/Home/ProductPicture/?id=@ViewBag.bild2" alt="">
                             </div>
                             <div class="item">
-                                <img class="slide-image slidimg" src="/Home/ProductPicture/?id=12" alt="">
+                                <img class="slide-image slidimg" src="/Home/ProductPicture/?id=@ViewBag.bild3" alt="">
                             </div>
                             
                             
@@ -56,6 +56,7 @@
                                     <a href="/Product/ShopItem/?id=@item.id">@item.Name</a>
                                 </h4>
                                 <p>@item.beschreibung</p>
+                                <p>@ViewBag.bild1 </p>
                             </div>
                             <div class="ratings">
                                 <p class="pull-right">15 Verkäuferbewertung</p>

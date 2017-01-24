@@ -18,6 +18,8 @@ namespace TauschMarkt.Controllers
         public ActionResult Index()
         {
 
+            
+
 
             currentUser = User.Identity.Name.ToString();
            
@@ -28,7 +30,7 @@ namespace TauschMarkt.Controllers
                 logedIn = HttpContext.User.Identity.IsAuthenticated;
                 ViewBag.isLogedIn = logedIn;
             }
-
+            
 
             using (MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu;Port=3306;Uid=u59498db9;Pwd=6lfqhupg;Database=u59498db9;"))
             {
@@ -50,8 +52,24 @@ namespace TauschMarkt.Controllers
                         art.beschreibung = reader["beschreibung"].ToString();
                         lohl.Add(art);
                     }
+                    reader.Close();
+                    
+                    command.CommandText = $"SELECT id FROM artikel WHERE picture IS NOT NULL";
+                    var reader2 = command.ExecuteReader();
+                    List<string> seas = new List<string>();
+                    while (reader2.Read())
+                    {
+
+                        string id = reader2["id"].ToString();
+
+                        seas.Add(id);
+                    }
+                    Random rnd = new Random();
 
 
+                    ViewBag.bild1 = seas[rnd.Next(1, seas.Count())];
+                    ViewBag.bild2 = seas[rnd.Next(1, seas.Count())];
+                    ViewBag.bild3 = seas[rnd.Next(1, seas.Count())];
 
                     return View(lohl);
                 }
@@ -61,13 +79,16 @@ namespace TauschMarkt.Controllers
                     return null;
                 }              
             }
+           
         }
+
+
 
         public ActionResult MeinTauschmarkt()
         {
-            
 
-           
+
+
             using (MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu;Port=3306;Uid=u59498db9;Pwd=6lfqhupg;Database=u59498db9;"))
             {
                 try
@@ -76,7 +97,7 @@ namespace TauschMarkt.Controllers
                     MySqlCommand command = connection.CreateCommand();
 
 
-                    command.CommandText = $"SELECT id, Name, Preis, kategorie_id, status, beschreibung FROM artikel WHERE user_id='" +currentUser+"'";
+                    command.CommandText = $"SELECT id, Name, Preis, kategorie_id, status, beschreibung FROM artikel WHERE user_id='" + currentUser + "'";
                     var reader = command.ExecuteReader();
                     List<Artikel> artikel = new List<Artikel>();
                     while (reader.Read())
@@ -97,11 +118,10 @@ namespace TauschMarkt.Controllers
                     return null;
                 }
             }
-
-
-
-            return View();
         }
+
+             
+
 
 
         public ActionResult ProductPicture(int id)
