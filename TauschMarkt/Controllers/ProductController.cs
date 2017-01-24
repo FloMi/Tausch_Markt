@@ -17,6 +17,69 @@ namespace TauschMarkt.Controllers
             return View();
         }
 
+        public ActionResult EditItem(int id)
+        {
+            try
+            {
+                MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu;Port=3306;Uid=u59498db9;Pwd=6lfqhupg;Database=u59498db9;");
+                connection.Open();
+
+
+                MySqlCommand command = connection.CreateCommand();
+                command.CommandText = $"SELECT id, Name, Preis, kategorie_id, status, beschreibung FROM artikel WHERE id = {id}";
+                var reader = command.ExecuteReader();
+                Artikel art = new Artikel();
+                if (reader.Read())
+                {
+                    art.id = reader["id"].ToString();
+                    art.Name = reader["Name"].ToString();
+                    art.Preis = reader["Preis"].ToString();
+                    art.beschreibung = reader["beschreibung"].ToString();
+
+                }
+                connection.Close();
+                return View(art);
+            }
+            catch (Exception e)
+            {
+
+            }
+            throw new Exception("Error while loading shop item.");
+
+        }
+
+
+
+        public ActionResult UpdateArtikel(string id, string name, string beschreibung, string preis)
+        {
+            try
+            {
+                MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu;Port=3306;Uid=u59498db9;Pwd=6lfqhupg;Database=u59498db9;");
+
+
+
+                string query = "UPDATE artikel SET Name = @Name, Preis = @Preis, beschreibung = @Beschreibung WHERE id = @id";
+                using (MySqlCommand cmd = new MySqlCommand(query))
+                {
+                    cmd.Connection = connection;
+                    cmd.Parameters.AddWithValue("@Name", name);
+                    cmd.Parameters.AddWithValue("@Preis", preis);
+                    cmd.Parameters.AddWithValue("@Beschreibung", beschreibung);
+                    cmd.Parameters.AddWithValue("@id", id);
+                    connection.Open();
+                    cmd.ExecuteNonQuery();
+                    connection.Close();
+                }
+                return View();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return View();
+            
+        }
+
         public ActionResult DeleteItem(int id)
         {
             try
@@ -112,6 +175,8 @@ namespace TauschMarkt.Controllers
         {
             return View();
         }
+
+
 
         public string AddItemAjax(string name, string preis, string beschreibung)
         {
