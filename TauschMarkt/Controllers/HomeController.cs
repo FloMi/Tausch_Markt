@@ -13,26 +13,13 @@ namespace TauschMarkt.Controllers
     public class HomeController : Controller
     {
         public static String currentUser;
-        public static Boolean logedIn = false;
-
-
-
 
         public ActionResult Index()
-        {
-
-
+        { 
             currentUser = User.Identity.Name.ToString();
            
-            ViewBag.logedInUser = currentUser;
-
-            if (HttpContext.User.Identity.IsAuthenticated && (System.Web.HttpContext.Current.User != null))
-            {
-                logedIn = HttpContext.User.Identity.IsAuthenticated;
-                ViewBag.isLogedIn = logedIn;
-            }
-
-
+            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+         
             using (MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu;Port=3306;Uid=u59498db9;Pwd=6lfqhupg;Database=u59498db9;"))
             {
                 try
@@ -89,8 +76,7 @@ namespace TauschMarkt.Controllers
 
         public ActionResult MeinTauschmarkt()
         {
-
-
+            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
 
             using (MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu;Port=3306;Uid=u59498db9;Pwd=6lfqhupg;Database=u59498db9;"))
             {
@@ -129,6 +115,7 @@ namespace TauschMarkt.Controllers
 
         public ActionResult ProductPicture(int id)
         {
+            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
             using (MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu; Port=3306; Database=u59498db9; Uid=u59498db9; Pwd=6lfqhupg;"))
             {
                 try
@@ -182,6 +169,7 @@ namespace TauschMarkt.Controllers
 
         public ActionResult About()
         {
+            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
             ViewBag.Message = "Your application description page.";
 
             return View();
@@ -189,6 +177,7 @@ namespace TauschMarkt.Controllers
 
         public ActionResult Contact()
         {
+            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
             ViewBag.Message = "Your contact page.";
 
             return View();
