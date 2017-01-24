@@ -170,12 +170,5 @@ namespace TauschMarkt.Controllers
 
             return View();
         }
-
-        internal static void logout()
-        {
-        
-
-            throw new NotImplementedException();
-        }
     }
 }
