@@ -40,37 +40,37 @@ namespace TauschMarkt.Controllers
                     connection.Open();
                     MySqlCommand command = connection.CreateCommand();
 
-
+                    //Produkte
                     command.CommandText = $"SELECT id, Name, Preis, kategorie_id, status, beschreibung FROM artikel";
                     var reader = command.ExecuteReader();
-                    List<Artikel> lohl = new List<Artikel>();
+                    List<ArtikelKategorie> lohl = new List<ArtikelKategorie>();
                     while (reader.Read())
                     {
+                        ArtikelKategorie artikelkategorie = new ArtikelKategorie();
                         Artikel art = new Artikel();
                         art.id = reader["id"].ToString();
                         art.Preis = reader["Preis"].ToString();
                         art.Name = reader["Name"].ToString();
                         art.beschreibung = reader["beschreibung"].ToString();
-                        lohl.Add(art);
+                        artikelkategorie.art = art;
+                        lohl.Add(artikelkategorie);
                     }
                     reader.Close();
-                    
-                    command.CommandText = $"SELECT id FROM artikel WHERE picture IS NOT NULL";
-                    var reader2 = command.ExecuteReader();
-                    List<string> seas = new List<string>();
-                    while (reader2.Read())
+                    //kategorien
+                    command.CommandText = $"SELECT id,Name FROM kategorie";
+                    var reader3 = command.ExecuteReader();
+
+                    while (reader3.Read())
                     {
+                        ArtikelKategorie artikelkategorie = new ArtikelKategorie();
+                        Kategorie kat = new Kategorie();
 
-                        string id = reader2["id"].ToString();
-
-                        seas.Add(id);
+                        kat.id = reader3["id"].ToString();
+                        kat.Name = reader3["Name"].ToString();
+                        artikelkategorie.kat = kat;
+                        lohl.Add(artikelkategorie);
                     }
-                    Random rnd = new Random();
-
-
-                    ViewBag.bild1 = seas[rnd.Next(1, seas.Count())];
-                    ViewBag.bild2 = seas[rnd.Next(1, seas.Count())];
-                    ViewBag.bild3 = seas[rnd.Next(1, seas.Count())];
+                    reader3.Close();
 
                     return View(lohl);
                 }

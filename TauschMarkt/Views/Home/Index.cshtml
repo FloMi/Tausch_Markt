@@ -1,13 +1,22 @@
-﻿@model List<TauschMarkt.Models.Artikel>
+﻿@model List<TauschMarkt.Models.ArtikelKategorie>
+
 
 <div class="container">
     <div class="row">
         <div class="col-md-3">
             <p class="lead">Kategorien</p>
             <div class="list-group">
-                <a href="#" class="list-group-item">Kategorien 1</a>
-                <a href="#" class="list-group-item">Kategorien 2</a>
-                <a href="#" class="list-group-item">Kategorien 3</a>
+            @foreach (var item in Model)
+            {
+                if (item.kat != null)
+                { 
+                    <a href="@item.kat.id" class="list-group-item">@item.kat.Name</a>
+
+                }
+
+            }
+
+              
             </div>
         </div>
         <div class="col-md-9">
@@ -47,29 +56,32 @@
             <div class="row">
                 @foreach (var item in Model)
                 {
-                    <div class="col-sm-4 col-lg-4 col-md-4">
-                        <div class="thumbnail">
-                            <img id="productpic" src="/Home/ProductPicture/?id=@item.id" alt="" style="min-height:100px;max-height:100px" onerror="loadPicError()">
-                            <div class="caption">
-                                <h4 class="pull-right">€@item.Preis</h4>
-                                <h4>
-                                    <a href="/Product/ShopItem/?id=@item.id">@item.Name</a>
-                                </h4>
-                                <p>@item.beschreibung</p>
-                                <p>@ViewBag.bild1 </p>
-                            </div>
-                            <div class="ratings">
-                                <p class="pull-right">15 Verkäuferbewertung</p>
-                                <p>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                </p>
+                    if (item.art != null)
+                    {
+                        <div class="col-sm-4 col-lg-4 col-md-4">
+                            <div class="thumbnail">
+                                <img id="productpic" src="/Home/ProductPicture/?id=@item.art.id" alt="" style="min-height:100px;max-height:100px" onerror="loadPicError()">
+                                <div class="caption">
+                                    <h4 class="pull-right">€@item.art.Preis</h4>
+                                    <h4>
+                                        <a href="/Product/ShopItem/?id=@item.art.id">@item.art.Name</a>
+                                    </h4>
+                                    <p>@item.art.beschreibung</p>
+                                                                </div>
+                                <div class="ratings">
+                                    <p class="pull-right">15 Verkäuferbewertung</p>
+                                    <p>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    }
+
                 }
              </div>
         </div>
