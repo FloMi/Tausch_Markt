@@ -20,7 +20,7 @@ namespace TauschMarkt.Controllers
 
         public ActionResult EditItem(int id)
         {
-            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+           Session["isLoggedIn"] = AccountController.checkIfLoggedin();
 
             try
             {
@@ -55,7 +55,7 @@ namespace TauschMarkt.Controllers
 
         public ActionResult UpdateArtikel(string id, string name, string beschreibung, string preis)
         {
-            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+            Session["isLoggedIn"] = AccountController.checkIfLoggedin();
 
             try
             {
@@ -87,7 +87,7 @@ namespace TauschMarkt.Controllers
 
         public ActionResult DeleteItem(int id)
         {
-            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+            Session["isLoggedIn"] = AccountController.checkIfLoggedin();
 
             try
             {
@@ -110,7 +110,7 @@ namespace TauschMarkt.Controllers
 
         public ActionResult ShopItem(int id)
         {
-            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+            Session["isLoggedIn"] = AccountController.checkIfLoggedin();
 
             //ViewBag.Message = "Your contact page.";
             try
@@ -144,7 +144,7 @@ namespace TauschMarkt.Controllers
 
         public ActionResult ProductPicture(int id)
         {
-            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+            Session["isLoggedIn"] = AccountController.checkIfLoggedin();
 
             using (MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu; Port=3306; Database=u59498db9; Uid=u59498db9; Pwd=6lfqhupg;"))
             {
@@ -184,7 +184,7 @@ namespace TauschMarkt.Controllers
 
         public ActionResult AddItem()
         {
-            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+            Session["isLoggedIn"] = AccountController.checkIfLoggedin();
 
             return View();
         }
@@ -193,7 +193,7 @@ namespace TauschMarkt.Controllers
 
         public string AddItemAjax(string name, string preis, string beschreibung)
         {
-            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+            Session["isLoggedIn"] = AccountController.checkIfLoggedin();
 
             try
             {

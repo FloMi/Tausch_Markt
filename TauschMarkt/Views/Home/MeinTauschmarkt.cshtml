@@ -2,7 +2,7 @@
 
 <h2>MeinTauschmarkt</h2>
 
-@if(ViewBag.isLogedIn)
+@if((Boolean)Session["isLoggedIn"])
 {
 
 
@@ -13,7 +13,7 @@
     {
         <div class="col-sm-4 col-lg-4 col-md-4">
             <div class="thumbnail">
-                <img src="/Home/ProductPicture/?id=@item.id" alt="">
+                <div class="imageseas"><img class="thumbnailimg" src="/Home/ProductPicture/?id=@item.id" alt=""></div>
                 <div class="caption">
                     <h4 class="pull-right">€@item.Preis</h4>
                     <h4>

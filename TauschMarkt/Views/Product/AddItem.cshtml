@@ -6,37 +6,37 @@
 }
 <link href="~/Content/form.css" rel="stylesheet" />
 <h2>Ein Produkt hinzufügen</h2>
+<div class="box">
+    <form id="add-form" class="pure-form">
+        <table>
+            <tr>
+                <td>Name</td>
+                <td><input id="Name" name="name" type="Text" /></td>
+            </tr>
 
-<form id="add-form" class="pure-form">
-    <table>
-       <tr>
-        <td>Name</td>
-        <td><input id="Name" name="name" type="Text" /></td>
-        </tr> 
+            <tr>
+                <td>Preis in &euro;</td>
+                <td><input id="Preis" name="preis" type="text" /></td>
+            </tr>
 
-        <tr>
-            <td>Preis in &euro;</td>
-            <td><input id="Preis" name="preis" type="text" /></td>
-        </tr>
+            <tr>
+                <td>Beschreibung<span width="3px"></span></td>
+                <td><input id="beschreibung" name="beschreibung" type="text" /></td>
+            </tr>
 
-        <tr>
-            <td>Beschreibung<span width="3px"></span></td>
-            <td><input id="beschreibung" name="beschreibung" type="text" /></td>
-        </tr>
-
-        <tr>
-            <td>Bild</td>
-            <td><br /><input type="file" name="file" id="pic" /></td>
-        </tr>
-        
-       
-    </table>
-    <input id="senden" value="Save" type="button" />
+            <tr>
+                <td>Bild</td>
+                <td><br /><input type="file" name="file" id="pic" /></td>
+            </tr>
 
 
-    <div id="seas"></div>
-</form>
+        </table>
+        <input id="senden" value="Save" type="button" />
 
+
+        <div id="seas"></div>
+    </form>
+</div>
 @section Scripts {
     <script src="~/Scripts/ajax.js"></script>
 }
