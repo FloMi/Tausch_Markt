@@ -32,13 +32,13 @@
 
                             
                                 <div class="item active">
-                                    <img class="slide-image slidimg" src="/Home/ProductPicture/?id=@ViewBag.bild1">
+                                    <img class="slidimg" src="/Home/ProductPicture/?id=@ViewBag.bild1" alt="Aktualisieren Sie die Seite.">
                                 </div>
                             <div class="item">
-                                <img class="slide-image slidimg" src="/Home/ProductPicture/?id=@ViewBag.bild2" alt="">
+                                <img class="slidimg" src="/Home/ProductPicture/?id=@ViewBag.bild2" alt="Aktualisieren Sie die Seite.">
                             </div>
                             <div class="item">
-                                <img class="slide-image slidimg" src="/Home/ProductPicture/?id=@ViewBag.bild3" alt="">
+                                <img class="slidimg" src="/Home/ProductPicture/?id=@ViewBag.bild3" alt="Aktualisieren Sie die Seite.">
                             </div>
                             
                             
@@ -60,24 +60,17 @@
                     {
                         <div class="col-sm-4 col-lg-4 col-md-4">
                             <div class="thumbnail">
-                                <img id="productpic" src="/Home/ProductPicture/?id=@item.art.id" alt="" style="min-height:100px;max-height:100px" onerror="loadPicError()">
-                                <div class="caption">
+                                <div class="imageseasindex">
+                                    <img alt="Aktualisieren Sie die Seite." class="thumbnailimg"  onerror="loadPicError()" src="/Home/ProductPicture/?id=@item.art.id">
+                                </div>
+                                    <div class="caption">
                                     <h4 class="pull-right">€@item.art.Preis</h4>
                                     <h4>
                                         <a href="/Product/ShopItem/?id=@item.art.id">@item.art.Name</a>
                                     </h4>
                                     <p>@item.art.beschreibung</p>
                                                                 </div>
-                                <div class="ratings">
-                                    <p class="pull-right">15 Verkäuferbewertung</p>
-                                    <p>
-                                        <span class="glyphicon glyphicon-star"></span>
-                                        <span class="glyphicon glyphicon-star"></span>
-                                        <span class="glyphicon glyphicon-star"></span>
-                                        <span class="glyphicon glyphicon-star"></span>
-                                        <span class="glyphicon glyphicon-star"></span>
-                                    </p>
-                                </div>
+                                
                             </div>
                         </div>
                     }

@@ -17,8 +17,8 @@ namespace TauschMarkt.Controllers
         public ActionResult Index()
         { 
             currentUser = User.Identity.Name.ToString();
-           
-            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+
+            Session["isLoggedIn"] = AccountController.checkIfLoggedin();
          
             using (MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu;Port=3306;Uid=u59498db9;Pwd=6lfqhupg;Database=u59498db9;"))
             {
@@ -67,6 +67,7 @@ namespace TauschMarkt.Controllers
 
                         seas.Add(id);
                     }
+                    reader2.Close();
                     Random rnd = new Random();
 
                     int s = rnd.Next(3, seas.Count()-3);
@@ -91,7 +92,7 @@ namespace TauschMarkt.Controllers
 
         public ActionResult MeinTauschmarkt()
         {
-            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+            Session["isLoggedIn"] = AccountController.checkIfLoggedin();
 
             using (MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu;Port=3306;Uid=u59498db9;Pwd=6lfqhupg;Database=u59498db9;"))
             {
@@ -130,7 +131,7 @@ namespace TauschMarkt.Controllers
 
         public ActionResult ProductPicture(int id)
         {
-            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+            Session["isLoggedIn"] = AccountController.checkIfLoggedin();
             using (MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu; Port=3306; Database=u59498db9; Uid=u59498db9; Pwd=6lfqhupg;"))
             {
                 try
@@ -145,7 +146,7 @@ namespace TauschMarkt.Controllers
                     {
                         if (DBNull.Value.Equals(reader["picture"]))
                         {
-                            picString = System.IO.File.ReadAllBytes(Server.MapPath("~/") + "\\Media\\main.png");
+                            picString = System.IO.File.ReadAllBytes(Server.MapPath("~/") + "\\Media\\alternative.png");
                         }
                         else
                         {
@@ -184,7 +185,7 @@ namespace TauschMarkt.Controllers
 
         public ActionResult About()
         {
-            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+            Session["isLoggedIn"] = AccountController.checkIfLoggedin();
             ViewBag.Message = "Your application description page.";
 
             return View();
@@ -192,7 +193,7 @@ namespace TauschMarkt.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+            Session["isLoggedIn"] = AccountController.checkIfLoggedin();
             ViewBag.Message = "Your contact page.";
 
             return View();

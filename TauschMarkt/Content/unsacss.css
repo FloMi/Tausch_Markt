@@ -4,7 +4,59 @@
     fit:fill;
     max-height:300px;
     min-height:300px;
+    min-width:20%;
+    max-width:80%;
     display:block;
     margin-left:auto;
     margin-right:auto
+}
+
+.thumbnailimg
+{
+    overflow:hidden;
+    fit:fill;
+    
+    display:block;
+    margin-left:auto;
+    margin-right:auto
+}
+
+.imageseas{
+    text-align:center;
+    position:relative;
+    width:inherit;
+    height:300px;
+    padding-top:10%; 
+
+}
+
+.imageseas > img{
+    max-height:100%;
+    max-width:100%;
+    margin-left: auto;
+    margin-right: auto;
+    display:block;
+}
+
+
+.imageseasindex{
+    text-align:center;
+    position:relative;
+    width:inherit;
+    height:250px;
+    padding-top:10%; 
+
+}
+.imageseasindex > img{
+    max-height:100%;
+    max-width:100%;
+    margin-left: auto;
+    margin-right: auto;
+    display:block;
+}
+
+.box{
+    border-radius:4px 4px 0 0;
+    border-color:darkgray;
+
 }
