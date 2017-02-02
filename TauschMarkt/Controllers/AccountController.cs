@@ -62,10 +62,16 @@ namespace TauschMarkt.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-
-            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+            returnUrl = "/Account/LoginForward";
             ViewBag.ReturnUrl = returnUrl;
-            logedIn = HttpContext.User.Identity.IsAuthenticated;
+            checkIfLoggedin();
+            return View();
+        }
+
+        public ActionResult LoginForward()
+        {
+            checkIfLoggedin();
+            return RedirectToAction("../Home/index");
             return View();
         }
 
@@ -147,7 +153,7 @@ namespace TauschMarkt.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+            ViewBag.isLogedIn = checkIfLoggedin();
             return View();
         }
 
@@ -167,7 +173,7 @@ namespace TauschMarkt.Controllers
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // Weitere Informationen zum Aktivieren der Kontobestätigung und Kennwortzurücksetzung finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=320771".
-                    // E-Mail-Nachricht mit diesem Link senden
+                    // E-Mail-Nachricht mit diesem Link sendenC:\Users\FlorianM\documents\visual studio 2015\Projects\TauschMarkt\TauschMarkt\Controllers\AccountController.cs
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Konto bestätigen", "Bitte bestätigen Sie Ihr Konto. Klicken Sie dazu <a href=\"" + callbackUrl + "\">hier</a>");
@@ -199,7 +205,7 @@ namespace TauschMarkt.Controllers
         [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
-            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+            ViewBag.isLogedIn = checkIfLoggedin();
             return View();
         }
 
@@ -236,7 +242,7 @@ namespace TauschMarkt.Controllers
         [AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
         {
-            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+            ViewBag.isLogedIn = checkIfLoggedin();
             return View();
         }
 
@@ -255,7 +261,7 @@ namespace TauschMarkt.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
         {
-            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+            ViewBag.isLogedIn = checkIfLoggedin();
 
             if (!ModelState.IsValid)
             {
@@ -281,7 +287,7 @@ namespace TauschMarkt.Controllers
         [AllowAnonymous]
         public ActionResult ResetPasswordConfirmation()
         {
-            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+            ViewBag.isLogedIn = checkIfLoggedin();
             return View();
         }
 
@@ -320,14 +326,14 @@ namespace TauschMarkt.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+                ViewBag.isLogedIn = checkIfLoggedin();
                 return View();
             }
 
             // Token generieren und senden
             if (!await SignInManager.SendTwoFactorCodeAsync(model.SelectedProvider))
             {
-                ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+                ViewBag.isLogedIn = checkIfLoggedin();
                 return View("Error");
             }
             return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
@@ -408,6 +414,10 @@ namespace TauschMarkt.Controllers
             FormsAuthentication.SignOut();
             Session.Abandon();
 
+            FormsAuthentication.SetAuthCookie(HttpContext.User.Identity.Name, false);
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            AuthenticationManager.SignOut();
+
             HttpCookie cookie1 = new HttpCookie(FormsAuthentication.FormsCookieName, "");
             cookie1.Expires = DateTime.Now.AddYears(-1);
             Response.Cookies.Add(cookie1);
@@ -418,7 +428,7 @@ namespace TauschMarkt.Controllers
 
             HttpContext.User = new GenericPrincipal(new GenericIdentity(string.Empty), null);
 
-            logedIn = HttpContext.User.Identity.IsAuthenticated;
+            logedIn = false;
 
             return RedirectToAction("Index", "Home");
         }
@@ -429,7 +439,10 @@ namespace TauschMarkt.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            FormsAuthentication.SetAuthCookie(HttpContext.User.Identity.Name, false);
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            AuthenticationManager.SignOut();
+
             return RedirectToAction("Index", "Home");
         }
 
@@ -438,7 +451,7 @@ namespace TauschMarkt.Controllers
         [AllowAnonymous]
         public ActionResult ExternalLoginFailure()
         {
-            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+            ViewBag.isLogedIn = checkIfLoggedin();
             return View();
         }
 
@@ -521,9 +534,10 @@ namespace TauschMarkt.Controllers
         }
         #endregion
 
-         static public bool checkIfLoggedin()
+        public bool checkIfLoggedin()
         {
-               return logedIn;
+            logedIn = HttpContext.User.Identity.IsAuthenticated;
+            return logedIn;
         }      
 
     }

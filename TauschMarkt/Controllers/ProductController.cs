@@ -20,7 +20,7 @@ namespace TauschMarkt.Controllers
 
         public ActionResult EditItem(int id)
         {
-           Session["isLoggedIn"] = AccountController.checkIfLoggedin();
+           Session["isLoggedIn"] = AccountController.logedIn;
 
             try
             {
@@ -55,7 +55,7 @@ namespace TauschMarkt.Controllers
 
         public ActionResult UpdateArtikel(string id, string name, string beschreibung, string preis)
         {
-            Session["isLoggedIn"] = AccountController.checkIfLoggedin();
+            Session["isLoggedIn"] = AccountController.logedIn;
 
             try
             {
@@ -87,7 +87,7 @@ namespace TauschMarkt.Controllers
 
         public ActionResult DeleteItem(int id)
         {
-            Session["isLoggedIn"] = AccountController.checkIfLoggedin();
+            Session["isLoggedIn"] = AccountController.logedIn;
 
             try
             {
@@ -110,7 +110,7 @@ namespace TauschMarkt.Controllers
 
         public ActionResult ShopItem(int id)
         {
-            Session["isLoggedIn"] = AccountController.checkIfLoggedin();
+            Session["isLoggedIn"] = AccountController.logedIn;
 
             //ViewBag.Message = "Your contact page.";
             try
@@ -144,7 +144,7 @@ namespace TauschMarkt.Controllers
 
         public ActionResult ProductPicture(int id)
         {
-            Session["isLoggedIn"] = AccountController.checkIfLoggedin();
+            Session["isLoggedIn"] = AccountController.logedIn;
 
             using (MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu; Port=3306; Database=u59498db9; Uid=u59498db9; Pwd=6lfqhupg;"))
             {
@@ -184,7 +184,7 @@ namespace TauschMarkt.Controllers
 
         public ActionResult AddItem()
         {
-            Session["isLoggedIn"] = AccountController.checkIfLoggedin();
+            Session["isLoggedIn"] = AccountController.logedIn;
 
             return View();
         }
@@ -193,7 +193,7 @@ namespace TauschMarkt.Controllers
 
         public string AddItemAjax(string name, string preis, string beschreibung)
         {
-            Session["isLoggedIn"] = AccountController.checkIfLoggedin();
+            Session["isLoggedIn"] = AccountController.logedIn;
 
             try
             {
