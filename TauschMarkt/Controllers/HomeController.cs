@@ -18,7 +18,7 @@ namespace TauschMarkt.Controllers
         { 
             currentUser = User.Identity.Name.ToString();
 
-            Session["isLoggedIn"] = AccountController.checkIfLoggedin();
+            Session["isLoggedIn"] = AccountController.logedIn;
          
             using (MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu;Port=3306;Uid=u59498db9;Pwd=6lfqhupg;Database=u59498db9;"))
             {
@@ -92,7 +92,7 @@ namespace TauschMarkt.Controllers
 
         public ActionResult MeinTauschmarkt()
         {
-            Session["isLoggedIn"] = AccountController.checkIfLoggedin();
+            Session["isLoggedIn"] = AccountController.logedIn;
 
             using (MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu;Port=3306;Uid=u59498db9;Pwd=6lfqhupg;Database=u59498db9;"))
             {
@@ -131,7 +131,7 @@ namespace TauschMarkt.Controllers
 
         public ActionResult ProductPicture(int id)
         {
-            Session["isLoggedIn"] = AccountController.checkIfLoggedin();
+            Session["isLoggedIn"] = AccountController.logedIn;
             using (MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu; Port=3306; Database=u59498db9; Uid=u59498db9; Pwd=6lfqhupg;"))
             {
                 try
@@ -185,7 +185,7 @@ namespace TauschMarkt.Controllers
 
         public ActionResult About()
         {
-            Session["isLoggedIn"] = AccountController.checkIfLoggedin();
+            Session["isLoggedIn"] = AccountController.logedIn;
             ViewBag.Message = "Your application description page.";
 
             return View();
@@ -193,7 +193,7 @@ namespace TauschMarkt.Controllers
 
         public ActionResult Contact()
         {
-            Session["isLoggedIn"] = AccountController.checkIfLoggedin();
+            Session["isLoggedIn"] = AccountController.logedIn;
             ViewBag.Message = "Your contact page.";
 
             return View();

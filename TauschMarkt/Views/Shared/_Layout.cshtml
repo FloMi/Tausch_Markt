@@ -44,13 +44,19 @@
                     <li class="hidden">
                         <a class="page-scroll" href="/Home/Index"></a>
                     </li>
+                    @if (Session["isLoggedIn"] != null)
+                    {
+                        if ((Boolean)Session["isLoggedIn"])
+                        {
                     <li>
-                        <a class="page-scroll" href="/Home/MeinTauschmarkt">Mein Tauschmarkt</a>
+                        <a class="page-scroll" href="/Home/MeinTauschmarkt">Meine Artikel</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="/Product/AddItem">Anzeige Erstellen</a>
                     </li>
-                </ul>
+                        }
+                    }
+                     </ul>
                 <div style="position:absolute;right:0px;vertical-align:middle;">
                     @if (Session["isLoggedIn"] != null)
                     {
@@ -65,15 +71,12 @@
 
                             <a class="btn btn-success btn-sm" style="min-height:50px; text-align:center; padding-top:15px;" href="/Account/Login"><span class="glyphicon glyphicon-log-out"></span>Log in</a>
                             <a class="btn btn-default btn-sm" style="margin-left:5px; min-height:50px; text-align:center; padding-top:15px;" href="/Account/Register"><span class="glyphicon glyphicon-log-out"></span>Registrieren</a>
-
                         }
                     }
                     else
                     {
-
                             <a class="btn btn-success btn-sm" style="min-height:50px; text-align:center; padding-top:15px;" href="/Account/Login"><span class="glyphicon glyphicon-log-out"></span>Log in</a>
                             <a class="btn btn-default btn-sm" style="margin-left:5px; min-height:50px; text-align:center; padding-top:15px;" href="/Account/Register"><span class="glyphicon glyphicon-log-out"></span>Registrieren</a>
-
                     }
                 </div>
             </div>
