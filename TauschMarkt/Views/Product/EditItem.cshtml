@@ -7,31 +7,31 @@
 
 <link href="~/Content/form.css" rel="stylesheet" />
 <h2>Bearbeiten Sie das Produkt.</h2>
+<div class="centerform">
+    <form id="add-form" class="pure-form" action="/Product/UpdateArtikel">
+        <input type="hidden" value="@Model.id" name="id" />
+        <table>
+            <tr>
+                <td>Name</td>
+                <td><input id="Name" name="name" type="Text" value="@Model.Name" /></td>
+            </tr>
 
-<form id="add-form" class="pure-form" action="/Product/UpdateArtikel">
-    <input type="hidden" value="@Model.id" name="id" />
-    <table>
-        <tr>
-            <td>Name</td>
-            <td><input id="Name" name="name" type="Text" value="@Model.Name"/></td>
-        </tr>
+            <tr>
+                <td>Preis</td>
+                <td><input id="Preis" name="preis" type="text" value="@Model.Preis" /></td>
+            </tr>
 
-        <tr>
-            <td>Preis</td>
-            <td><input id="Preis" name="preis" type="text" value="@Model.Preis"/></td>
-        </tr>
-
-        <tr>
-            <td>Beschreibung<span width="3px"></span></td>
-            <td><input id="beschreibung" name="beschreibung" type="text" value="@Model.beschreibung"/></td>
-        </tr>
-
-
-    </table>
-    <input id="senden" value="Save" type="submit" />
+            <tr>
+                <td>Beschreibung<span width="3px"></span></td>
+                <td><input id="beschreibung" name="beschreibung" type="text" value="@Model.beschreibung" /></td>
+            </tr>
 
 
-    <div id="seas"></div>
+        </table>
+        <input id="senden" value="Speichern" type="submit" />
+</div>
+
+<div id="seas"></div>
 </form>
 
 

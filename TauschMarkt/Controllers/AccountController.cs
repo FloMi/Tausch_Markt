@@ -63,7 +63,6 @@ namespace TauschMarkt.Controllers
         public ActionResult Login(string returnUrl)
         {
 
-            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
             ViewBag.ReturnUrl = returnUrl;
             logedIn = HttpContext.User.Identity.IsAuthenticated;
             return View();
@@ -147,7 +146,7 @@ namespace TauschMarkt.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+            Session["isLoggedIn"] = AccountController.checkIfLoggedin();
             return View();
         }
 
@@ -199,7 +198,7 @@ namespace TauschMarkt.Controllers
         [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
-            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+            Session["isLoggedIn"] = AccountController.checkIfLoggedin();
             return View();
         }
 
@@ -221,10 +220,10 @@ namespace TauschMarkt.Controllers
 
                 // Weitere Informationen zum Aktivieren der Kontobestätigung und Kennwortzurücksetzung finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=320771".
                 // E-Mail-Nachricht mit diesem Link senden
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Kennwort zurücksetzen", "Bitte setzen Sie Ihr Kennwort zurück. Klicken Sie dazu <a href=\"" + callbackUrl + "\">hier</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
+                await UserManager.SendEmailAsync(user.Id, "Kennwort zurücksetzen", "Bitte setzen Sie Ihr Kennwort zurück. Klicken Sie dazu <a href=\"" + callbackUrl + "\">hier</a>");
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // Wurde dieser Punkt erreicht, ist ein Fehler aufgetreten; Formular erneut anzeigen.
@@ -236,7 +235,7 @@ namespace TauschMarkt.Controllers
         [AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
         {
-            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+            Session["isLoggedIn"] = AccountController.checkIfLoggedin();
             return View();
         }
 
@@ -255,7 +254,7 @@ namespace TauschMarkt.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
         {
-            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+            Session["isLoggedIn"] = AccountController.checkIfLoggedin();
 
             if (!ModelState.IsValid)
             {
@@ -281,7 +280,7 @@ namespace TauschMarkt.Controllers
         [AllowAnonymous]
         public ActionResult ResetPasswordConfirmation()
         {
-            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+            Session["isLoggedIn"] = AccountController.checkIfLoggedin();
             return View();
         }
 
@@ -320,14 +319,14 @@ namespace TauschMarkt.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+                Session["isLoggedIn"] = AccountController.checkIfLoggedin();
                 return View();
             }
 
             // Token generieren und senden
             if (!await SignInManager.SendTwoFactorCodeAsync(model.SelectedProvider))
             {
-                ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+                Session["isLoggedIn"] = AccountController.checkIfLoggedin();
                 return View("Error");
             }
             return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
@@ -438,7 +437,7 @@ namespace TauschMarkt.Controllers
         [AllowAnonymous]
         public ActionResult ExternalLoginFailure()
         {
-            ViewBag.isLogedIn = AccountController.checkIfLoggedin();
+            Session["isLoggedIn"] = AccountController.checkIfLoggedin();
             return View();
         }
 
