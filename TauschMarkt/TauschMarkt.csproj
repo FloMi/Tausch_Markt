@@ -257,6 +257,7 @@
     <Content Include="Views\Home\MeinTauschmarkt.cshtml" />
     <Content Include="Views\Home\DeleteItem.cshtml" />
     <Content Include="Views\Account\LoginForward.cshtml" />
+    <Content Include="Views\Shared\NotLoggedIn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -114,8 +114,14 @@ namespace TauschMarkt.Controllers
                         art.beschreibung = reader["beschreibung"].ToString();
                         artikel.Add(art);
                     }
-
-                    return View(artikel);
+                    if ((Boolean)Session["isLoggedIn"])
+                    {
+                        return View(artikel);
+                    }else
+                    {
+                        return View("NotLoggedIn");
+                    }
+                    
                 }
                 catch (Exception e)
                 {
