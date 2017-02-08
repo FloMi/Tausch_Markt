@@ -2,8 +2,6 @@
 
 <h2>MeinTauschmarkt</h2>
 
-@if((Boolean)Session["isLoggedIn"])
-{
 
 
 <h3>@ViewBag.logedInUser</h3>
@@ -28,11 +26,3 @@
         </div>
     }
 </div>
-}
-else
-{
-   <h2>Nicht Angemeldet</h2>
-<a href="/Account/Login">Einloggen</a>
- <br />
-<a href="/Account/Register">Registrieren</a>
-}
