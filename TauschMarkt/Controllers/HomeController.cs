@@ -4,8 +4,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using TauschMarkt.Models;
 
 namespace TauschMarkt.Controllers
@@ -15,11 +18,11 @@ namespace TauschMarkt.Controllers
         public static String currentUser;
 
         public ActionResult Index()
-        { 
+        {
             currentUser = User.Identity.Name.ToString();
 
             Session["isLoggedIn"] = AccountController.logedIn;
-         
+
             using (MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu;Port=3306;Uid=u59498db9;Pwd=6lfqhupg;Database=u59498db9;"))
             {
                 try
@@ -50,7 +53,7 @@ namespace TauschMarkt.Controllers
                     {
                         ArtikelKategorie artkat = new ArtikelKategorie();
                         Kategorie kat = new Kategorie();
-                        kat.id= reader3["id"].ToString();
+                        kat.id = reader3["id"].ToString();
                         kat.Name = reader3["Name"].ToString();
                         artkat.kat = kat;
                         lohl.Add(artkat);
@@ -70,22 +73,22 @@ namespace TauschMarkt.Controllers
                     reader2.Close();
                     Random rnd = new Random();
 
-                    int s = rnd.Next(3, seas.Count()-3);
-        
+                    int s = rnd.Next(3, seas.Count() - 3);
+
 
                     ViewBag.bild1 = seas[s];
-                    ViewBag.bild2 = seas[s+1];
-                    ViewBag.bild3 = seas[s+2];
+                    ViewBag.bild2 = seas[s + 1];
+                    ViewBag.bild3 = seas[s + 2];
 
                     return View(lohl);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
                     return null;
-                }              
+                }
             }
-           
+
         }
 
 
@@ -117,11 +120,12 @@ namespace TauschMarkt.Controllers
                     if ((Boolean)Session["isLoggedIn"])
                     {
                         return View(artikel);
-                    }else
+                    }
+                    else
                     {
                         return View("NotLoggedIn");
                     }
-                    
+
                 }
                 catch (Exception e)
                 {
@@ -130,8 +134,70 @@ namespace TauschMarkt.Controllers
                 }
             }
         }
+        [ValidateInput(false)]
+        public ActionResult SendMessage(string nachricht, string productId, string name)
+        {
 
-             
+            using (MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu;Port=3306;Uid=u59498db9;Pwd=6lfqhupg;Database=u59498db9;"))
+            {
+                try
+                {
+                    connection.Open();
+                    MySqlCommand command = connection.CreateCommand();
+
+
+                    command.CommandText = $"SELECT id, Name, Preis, kategorie_id, status, beschreibung, user_id FROM artikel WHERE id='" + productId + "'";
+                    var reader = command.ExecuteReader();
+                    Artikel art = new Artikel();
+                    var productOwnerMail = "";
+                    while (reader.Read())
+                    {
+                        Artikel tempArt = new Artikel();
+                        art.id = reader["id"].ToString();
+                        art.Preis = reader["Preis"].ToString();
+                        art.Name = reader["Name"].ToString();
+                        art.beschreibung = reader["beschreibung"].ToString();
+                        productOwnerMail = reader["user_id"].ToString();
+                    }
+
+
+                    using (MailMessage mm = new MailMessage("adrian.roesser@gmail.com", productOwnerMail))
+                    {
+
+                        mm.Subject = "Kaufanfrage: "+art.Name; //Betreff
+                        string standardText = "Kaufanfrage für " + art.Name + " von " + name +" um "+art.Preis + "€\r\n\r\n";
+                        string linie = "\r\n---------------------------------------------------------------------------------\r\n\r\n";
+                        string ruckmeldung = "\r\nFür Rückmeldungen bitte E-Mail an: " + User.Identity.Name;
+                        mm.Body = standardText + linie+ nachricht + linie + ruckmeldung; //Zusätzliche Nachricht
+                        mm.IsBodyHtml = false; //html formatieren
+                        SmtpClient smtp = new SmtpClient(); //noch smtp server von mir verwenden (google)
+                        smtp.Host = "smtp.gmail.com";
+                        smtp.EnableSsl = true;
+
+
+                        smtp.UseDefaultCredentials = true;
+                        smtp.EnableSsl = true;
+
+                        NetworkCredential NetworkCred = new NetworkCredential("adrian.roesser@gmail.com", "diplomtest");
+                        smtp.Credentials = NetworkCred;
+
+                        smtp.Port = 587; //Standard Port von Gmail
+                        smtp.Send(mm); //Senden
+                    }
+                    return View("~/Views/Product/ShopItem.cshtml", art);
+                }
+                catch (Exception e)
+                {
+
+                }
+            }
+
+
+           
+            return View("");
+        }
+
+
 
 
 
@@ -172,7 +238,7 @@ namespace TauschMarkt.Controllers
                     Console.WriteLine(e.Message);
                     return null;
                 }
-                
+
 
             }
 

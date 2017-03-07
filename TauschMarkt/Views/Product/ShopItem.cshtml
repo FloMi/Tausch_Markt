@@ -30,10 +30,10 @@
         </div>
             <div class="col-md-9">
                 <div class="thumbnail">
-                    <form id="add-form" class="pure-form">
+                    <form id="" class="pure-form" action="/Home/SendMessage">
                         <table>
                             <tr>
-                                <td>Name</td>
+                                <td>Ihr Name: </td>
                                 <td><input id="Name" name="name" type="Text" /></td>
                             </tr>
 
@@ -42,9 +42,10 @@
                                 <td><textarea id="nachricht" name="nachricht" type="Text" cols="40" rows="5"></textarea></td>
                             </tr>
 
+                            <input type="hidden" name="productId" value="@Model.id"/>
 
                         </table>
-                        <input id="senden" value="Save" type="button" />
+                        <input id="senden" value="Senden" type="submit" />
                 </div>
                 
         </div>
