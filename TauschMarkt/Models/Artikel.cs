@@ -14,5 +14,6 @@ namespace TauschMarkt.Models
         public int kategroie_id { get; set; }
         public int status { get; set; }
         public string beschreibung { get; set; }
+        public string seller { get; set; }
     }
 }

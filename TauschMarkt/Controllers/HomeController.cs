@@ -134,8 +134,10 @@ namespace TauschMarkt.Controllers
                 }
             }
         }
+
+        //nicht Eingeloggt
         [ValidateInput(false)]
-        public ActionResult SendMessage(string nachricht, string productId, string name)
+        public ActionResult SendMessage(string nachricht, string productId, string name, string email)
         {
 
             using (MySqlConnection connection = new MySqlConnection("Server=e50073-mysql.services.easyname.eu;Port=3306;Uid=u59498db9;Pwd=6lfqhupg;Database=u59498db9;"))
@@ -144,7 +146,6 @@ namespace TauschMarkt.Controllers
                 {
                     connection.Open();
                     MySqlCommand command = connection.CreateCommand();
-
 
                     command.CommandText = $"SELECT id, Name, Preis, kategorie_id, status, beschreibung, user_id FROM artikel WHERE id='" + productId + "'";
                     var reader = command.ExecuteReader();
@@ -157,6 +158,7 @@ namespace TauschMarkt.Controllers
                         art.Preis = reader["Preis"].ToString();
                         art.Name = reader["Name"].ToString();
                         art.beschreibung = reader["beschreibung"].ToString();
+                        art.seller = reader["user_id"].ToString();
                         productOwnerMail = reader["user_id"].ToString();
                     }
 
@@ -164,11 +166,12 @@ namespace TauschMarkt.Controllers
                     using (MailMessage mm = new MailMessage("adrian.roesser@gmail.com", productOwnerMail))
                     {
 
-                        mm.Subject = "Kaufanfrage: "+art.Name; //Betreff
-                        string standardText = "Kaufanfrage für " + art.Name + " von " + name +" um "+art.Preis + "€\r\n\r\n";
+                        mm.Subject = "Kaufanfrage: " + art.Name; //Betreff
+                        string standardText = "Kaufanfrage für " + art.Name + " von " + name + " um " + art.Preis + "€\r\n\r\n";
                         string linie = "\r\n---------------------------------------------------------------------------------\r\n\r\n";
-                        string ruckmeldung = "\r\nFür Rückmeldungen bitte E-Mail an: " + User.Identity.Name;
-                        mm.Body = standardText + linie+ nachricht + linie + ruckmeldung; //Zusätzliche Nachricht
+
+                        string ruckmeldung = "\r\nFür Rückmeldungen bitte E-Mail an: " + email;
+                        mm.Body = standardText + linie + nachricht + linie + ruckmeldung; //Zusätzliche Nachricht
                         mm.IsBodyHtml = false; //html formatieren
                         SmtpClient smtp = new SmtpClient(); //noch smtp server von mir verwenden (google)
                         smtp.Host = "smtp.gmail.com";
@@ -191,12 +194,10 @@ namespace TauschMarkt.Controllers
 
                 }
             }
-
-
-           
-            return View("");
+            return View();
         }
-
+        //eingeloggt
+        
 
 
 

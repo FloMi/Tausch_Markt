@@ -120,7 +120,7 @@ namespace TauschMarkt.Controllers
 
 
                 MySqlCommand command = connection.CreateCommand();
-                command.CommandText = $"SELECT id, Name, Preis, kategorie_id, status, beschreibung FROM artikel WHERE id = {id}";
+                command.CommandText = $"SELECT id, Name, Preis, kategorie_id, status, beschreibung, user_id FROM artikel WHERE id = {id}";
                 var reader = command.ExecuteReader();
                 Artikel art = new Artikel();
                 if (reader.Read())
@@ -129,6 +129,7 @@ namespace TauschMarkt.Controllers
                     art.Name = reader["Name"].ToString();
                     art.Preis = reader["Preis"].ToString();
                     art.beschreibung = reader["beschreibung"].ToString();
+                    art.seller = reader["user_id"].ToString();
 
                 }
                 connection.Close();
@@ -136,9 +137,9 @@ namespace TauschMarkt.Controllers
             }
             catch (Exception e)
             {
+                throw new Exception("Error while loading shop item.");
 
             }
-            throw new Exception("Error while loading shop item.");
 
         }
 

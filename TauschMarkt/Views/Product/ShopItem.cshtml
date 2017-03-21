@@ -5,11 +5,9 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3">
-            <p class="lead">Shop Name</p>
-            <div class="list-group">
-                <a href="#" class="list-group-item active">Category 1</a>
-                <a href="#" class="list-group-item">Category 2</a>
-                <a href="#" class="list-group-item">Category 3</a>
+            <p class="lead">Verkäufer</p>
+            <div >
+                @Model.seller
             </div>
         </div>
         <div class="col-md-9">
@@ -18,7 +16,7 @@
                 <div class="caption-full">
                     <h4 class="pull-right">$@Model.Preis</h4>
                     <h4>
-                        <a href="#">@Model.Name</a>
+                        @Model.Name
                     </h4>
                     <p>@Model.beschreibung</p>
                 </div>
@@ -34,18 +32,33 @@
                         <table>
                             <tr>
                                 <td>Ihr Name: </td>
-                                <td><input id="Name" name="name" type="Text" /></td>
+                                <td><input id="Name" name="name" type="Text" class="form-control"/></td>
+                                @if (Session["isLoggedIn"] != null)
+                                {
+                                    if (!(Boolean)Session["isLoggedIn"])
+                                    {
+                                        <br />
+                                        <tr>
+                                        <td>Ihre E-Mail: </td>
+                                        <td><input id="email" name="email" type="text" value="" class="form-control"/></td>
+                                            </tr>
+                                    }else
+                                    {
+                                        <input type="hidden" name="email" value="@User.Identity.Name" />
+                                    }
+                                }
+                                
                             </tr>
 
                             <tr>
                                 <td>Nachricht an Verkäufer: </td>
-                                <td><textarea id="nachricht" name="nachricht" type="Text" cols="40" rows="5"></textarea></td>
+                                <td><textarea id="nachricht" name="nachricht" type="Text" cols="40" rows="5" class="form-control"></textarea></td>
                             </tr>
 
                             <input type="hidden" name="productId" value="@Model.id"/>
 
                         </table>
-                        <input id="senden" value="Senden" type="submit" />
+                        <input id="senden" value="Senden" type="submit" class="btn-default btn-success"/>
                 </div>
                 
         </div>
